@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="cordova.js"></script>
+        <link rel="stylesheet" href="css/index.css">
+        <script src="js/index.js"></script>
+        <script src="lib/jquery.js"></script>
+        <script src="lib/jquery.mobile-1.4.5.js"></script>
+        <link rel="stylesheet" href="lib/jquery.mobile-1.4.5.css">
+        
+        <title>contact Appli</title>
+    </head>
+    <body>
+        <h1>Application contact</h1>
+        <div data-role="page" id="home">
+            
+            <div id="deviceready" data-role="header">
+                <h1>Contacts</h1>
+            </div>
+
+            <div role="main" class="ui-content">
+                <a href="#addpage" data-role="button" data-icon="plus" data-iconpos="right">add</a>
+                <ul data-role="listview" id="contactsList" data-inset="true" data-filter="true" >
+                    
+                </ul>
+            </div>
+
+            <div data-role="footer"></div>
+
+        </div>
+
+        <div id="addpage" data-role="page" class="ui-content">
+            <div data-role="header">
+                <h2>Ajouter un contact</h2>
+            </div>
+            
+            <div data-role="main">
+            
+            <fieldset>
+                <label for="dName">Nom Affiché</label><input type="text" name="dName" id="dName">
+                <label for="Name">Nom</label> <input type="text" name="Name" id="Name">
+                <label for="pNumber">Numero de tel</label>  <input type="tel" name="pNumber" id="pNumber">
+                <a href="#home" onclick="createContact()" data-role="button">Ajouter</a>
+                
+                
+            </fieldset>
+        </div>
+        </div>
+  
+
+        <div id="showpage" data-role="page">
+            <div data-role="header">
+                <h2>details contact</h2>
+            </div>
+            <div data-role="main">
+                <ul id="detailContact" data-role="listview">
+
+                </ul>>
+            </div>
+           
+        </div>
+        
+        
+    </body>
+</html>
