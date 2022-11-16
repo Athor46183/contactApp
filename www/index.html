@@ -12,7 +12,7 @@
         <title>contact Appli</title>
     </head>
     <body>
-        <div data-role="page" id="home">
+        <div data-role="page" id="home"><!-- page de presentation des contacts -->
             
             <div id="deviceready" data-role="header">
                 <h1>Contacts</h1>
@@ -29,7 +29,7 @@
 
         </div>
 
-        <div id="addpage" data-role="page" class="ui-content">
+        <div id="addpage" data-role="page" class="ui-content"><!-- page d'ajout de contact    -->
             <div data-role="header">
                 <h2>Ajouter un contact</h2>
             </div>
@@ -48,7 +48,7 @@
         </div>
   
 
-        <div id="showpage" data-role="page">
+        <div id="showpage" data-role="page"><!--  page d'affichage d'un contact  -->
             <div data-role="header">
                 <h2>details contact</h2>
             </div>
@@ -59,7 +59,7 @@
             </div>
            
         </div>
-        <div id="editpage" data-role="page" class="ui-content">
+        <div id="editpage" data-role="page" class="ui-content"><!--  page de modification d'un contact      -->
             <div data-role="header">
                 <h2>editer un contact</h2>
             </div>
@@ -68,6 +68,7 @@
             
             <fieldset>
                 <label for="eName">Nom Affiché</label><input type="text" name="eName" id="eName">
+                <label for="nameE">Nom</label> <input type="text" name="nameE" id="nameE">
                 <label for="eNumber">Numero de tel</label>  <input type="tel" name="eNumber" id="eNumber">
                 <a onclick="editContact()" href="#home" data-role="button">modifier</a>
                 
@@ -75,7 +76,6 @@
             </fieldset>
         </div>
         </div>
-        
         
     </body>
 </html>

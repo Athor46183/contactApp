@@ -13,7 +13,7 @@ document.addEventListener("deviceready",loadContacts,false);
 
 }
 
-//showContacts permet de lister les contacts
+//showContacts permet de lister les contacts 
 function showContacts(contacts){
     let contactsHTML = '';
     let name;
@@ -27,8 +27,8 @@ function showContacts(contacts){
             num[k] = contacts[i].phoneNumbers[k].value; }
         contactsHTML +=`
         <li>
-            <a href=#showpage onclick="showContact('${name}','${num}','${id}')">
-                
+            <a href=#showpage onclick="showContact(${id})">
+            <img src="img/profile.png" alt="avatar-contact">
                 <h2>${contacts[i].name.formatted}</h2>`;
                for (let j = 0; j < contacts[i].phoneNumbers.length;j++){
                 contactsHTML += `<p>${contacts[i].phoneNumbers[j].value}</p>`;
@@ -36,7 +36,7 @@ function showContacts(contacts){
                 
             contactsHTML+='</a>';
            contactsHTML+=
-           `<a href=# onclick="suppContact(${id})" data-role="button" data-icon="minus" data-iconpos="notext"></a>
+           `<a href=# onclick="ConfirmSuppContact(${id},${contacts[i].phoneNumbers.value})" data-role="button" data-icon="minus" data-iconpos="notext"></a>
            
         <li/>`
         ;
@@ -45,15 +45,35 @@ function showContacts(contacts){
     $(contactsList).listview('refresh');
 }
 //showContact recupere et afficher le nom , id et la numero  d'un contact
-function showContact(name,num,id){
-    //loadContacts();
-    let detail =` <li>
-    <a href=#editpage onclick="editContact(${id})" data-role="button" data-icon="edit" >editer</a>
-        <p>id :${id}</p>
-        <p>name :${name} </p>
-        <p>numéros :${num}</p>
+function showContact(id){
+
+    function onSuccess(contact){
+        let contacter = contact[0];
+     let   phone = [];
+        for (let l = 0; l < contacter.phoneNumbers.length; l++) {
+            phone[l] = contacter.phoneNumbers[l].value;
+            
+        }
+        let detail =` <li>
+    <a href=#editpage onclick="editContact(${contacter.id})" data-role="button" data-icon="edit" >editer</a>
+        <p>id :${contacter.id}</p>
+        <p>name :${contacter.name.formatted} </p>
+        <p>numéros :${phone}</p>
     </li>`;
-        detailContact.innerHTML=detail;
+    detailContact.innerHTML=detail;
+    }
+    function onError(){
+        alert('bruh');
+    }
+    var options      = new ContactFindOptions();
+    options.filter   = id;
+    options.hasPhoneNumber = true;
+    var fields       = ["id"];
+    navigator.contacts.find(fields, onSuccess, onError, options);
+
+    //loadContacts();
+    
+       
         
         
 }
@@ -61,7 +81,6 @@ function showContact(name,num,id){
 function suppContact(id){
 
     function onSuccess(contacts) {
-        alert('Found ' + contacts.length + ' contacts.');
         let contact = contacts[0];
         contact.remove(contactRemoveSuccess, contactRemoveError);
 
@@ -116,28 +135,29 @@ function createContact(){
 //editContact permet d'editer modifier le nouveau et le numero d'un contact existant
 function editContact(id){
 
-    function Success(contact) {
+    function onSuccess(contact) {
+
+        let contacte = contact[0];
        
-        function onSuccess(contact) {
-            alert("Save Success"+contact[0]);
-            loadContacts();
-            $(contactsList).listview('refresh');
-    
-        };
         
-        function onError(contactError) {
-            alert("Error = " + contactError);
-        };
-        
-        // create a new contact object
-        cont = navigator.contacts.create();
-        cont.displayName = eName.value;  
-        let phoneNumber=[];
-        phoneNumber[0]=eNumber.value;   phoneNumber[0] = new ContactField('mobile', eNumber.value, true);
-        cont.phoneNumbers =  phoneNumber;     
-        
-        // save to device
-        cont.save(onSuccess,onError);
+        let contactModify = contacte.clone();
+            
+        contacte.remove(function(){
+            let displayName = eName.value;
+            let name = nameE.value;
+            let phoneNumber = [];
+            phoneNumber[0] = new ContactField('mobile',eNumber.value,'true');
+            contactModify.displayName = displayName;
+            contactModify.name = name;
+            contactModify.phoneNumbers = phoneNumber;
+            contactModify.save(function(res){
+                
+                loadContacts();
+                $(contactsList).listview('refresh');
+            },function(error){
+                alert("echec de la modification")
+            });
+        },function(removetError){ alert("not removed");});
         
     };
     
@@ -150,11 +170,26 @@ function editContact(id){
     options.filter   = id;
     options.hasPhoneNumber = true;
     var fields       = ["id"];
-    navigator.contacts.find(fields, Success, onErro, options);
+    navigator.contacts.find(fields, onSuccess, onErro, options);
 
    
 }
 
+
+function ConfirmSuppContact(id,num){
+    function onConfirm(buttonIndex) {
+        if (buttonIndex ===1) { 
+            suppContact(id);   
+        };
+    }
+    
+    navigator.notification.confirm(
+        `voulez vous vraiment supprimmer le contact '${num}' ?`, // message
+         onConfirm,            // callback to invoke with index of button pressed
+        'supprimer?',           // title
+        ['confirmer','Annuler']     // buttonLabels
+    );
+}
 function onError(error){
     console.log(error);
 }
