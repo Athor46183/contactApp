@@ -184,7 +184,7 @@ function ConfirmSuppContact(id,num){
     }
     
     navigator.notification.confirm(
-        `voulez vous vraiment supprimmer le contact '${num}' ?`, // message
+        `voulez vous vraiment supprimmer le contact ?`, // message
          onConfirm,            // callback to invoke with index of button pressed
         'supprimer?',           // title
         ['confirmer','Annuler']     // buttonLabels
