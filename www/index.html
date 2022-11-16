@@ -12,7 +12,6 @@
         <title>contact Appli</title>
     </head>
     <body>
-        <h1>Application contact</h1>
         <div data-role="page" id="home">
             
             <div id="deviceready" data-role="header">
@@ -41,7 +40,7 @@
                 <label for="dName">Nom Affiché</label><input type="text" name="dName" id="dName">
                 <label for="Name">Nom</label> <input type="text" name="Name" id="Name">
                 <label for="pNumber">Numero de tel</label>  <input type="tel" name="pNumber" id="pNumber">
-                <a href="#home" onclick="createContact()" data-role="button">Ajouter</a>
+                <a onclick="createContact()" href="#home" data-role="button">Ajouter</a>
                 
                 
             </fieldset>
@@ -53,12 +52,28 @@
             <div data-role="header">
                 <h2>details contact</h2>
             </div>
-            <div data-role="main">
+            <div data-role="main" >
                 <ul id="detailContact" data-role="listview">
 
                 </ul>>
             </div>
            
+        </div>
+        <div id="editpage" data-role="page" class="ui-content">
+            <div data-role="header">
+                <h2>editer un contact</h2>
+            </div>
+            
+            <div data-role="main">
+            
+            <fieldset>
+                <label for="eName">Nom Affiché</label><input type="text" name="eName" id="eName">
+                <label for="eNumber">Numero de tel</label>  <input type="tel" name="eNumber" id="eNumber">
+                <a onclick="editContact()" href="#home" data-role="button">modifier</a>
+                
+                
+            </fieldset>
+        </div>
         </div>
         
         
